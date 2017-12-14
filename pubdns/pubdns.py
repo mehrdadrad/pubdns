@@ -20,9 +20,7 @@ class PubDNS(object):
         try:
             self._load_data()
         except:
-            csv_data = self._get_data()
-            self._normalize(csv_data)
-            self._save_data()
+            self.update()
 
     def _get_data(self):
         try:
@@ -71,6 +69,13 @@ class PubDNS(object):
                 if rec['city'] == city:
                     yield rec
         return (x for x in PubDNS.data[country_id])
+
+    def update(self):
+        """ Fetch and save pub dns info """
+
+        csv_data = self._get_data()
+        self._normalize(csv_data)
+        self._save_data()
 
 def pubdns():
     """ Return a :class:`PubDNS` """
