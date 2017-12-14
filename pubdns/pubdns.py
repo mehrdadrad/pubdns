@@ -1,7 +1,7 @@
 """
 public dns python module
 """
-
+import logging
 import os
 import json
 import collections
@@ -19,7 +19,8 @@ class PubDNS(object):
 
         try:
             self._load_data()
-        except:
+        except Exception as e:
+            logging.debug(e)
             self.update()
 
     def _get_data(self):
@@ -42,21 +43,14 @@ class PubDNS(object):
             self.data[fields[m['country_id']]].append(rec)
 
     def _load_data(self):
-        try:
-            filename = os.path.join(self.home, '.publicdns.csv')
-            with open(filename, 'r') as f:
-                PubDNS.data = json.load(f)
-
-        except:
-            raise 'can not load data from local drive'
+        filename = os.path.join(self.home, '.publicdns.csv')
+        with open(filename, 'r') as f:
+            PubDNS.data = json.load(f)
 
     def _save_data(self):
-        try:
-            filename = os.path.join(self.home, '.publicdns.csv')
-            with open(filename, 'w') as f:
-                f.write(json.dumps(PubDNS.data))
-        except:
-            raise 'can not save data to local drive'
+        filename = os.path.join(self.home, '.publicdns.csv')
+        with open(filename, 'w') as f:
+            f.write(json.dumps(PubDNS.data))
 
     def get_servers(self, country_id, city=''):
         """ Return servers based on the country / city """
@@ -73,9 +67,12 @@ class PubDNS(object):
     def update(self):
         """ Fetch and save pub dns info """
 
-        csv_data = self._get_data()
-        self._normalize(csv_data)
-        self._save_data()
+        try:
+            csv_data = self._get_data()
+            self._normalize(csv_data)
+            self._save_data()
+        except Exception as e:
+            logging.debug(e)
 
 def pubdns():
     """ Return a :class:`PubDNS` """
