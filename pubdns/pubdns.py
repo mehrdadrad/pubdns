@@ -11,9 +11,9 @@ class PubDNS(object):
     """ PubDNS class """
 
     host = 'https://public-dns.info/nameservers.csv'
+    data = collections.defaultdict(list)
 
     def __init__(self):
-        self.data = collections.defaultdict(list)
         self.home = os.path.expanduser("~")
         self.disable_cache = False
 
@@ -43,7 +43,7 @@ class PubDNS(object):
         try:
             filename = os.path.join(self.home, '.publicdns.csv')
             with open(filename, 'r') as f:
-                self.data = json.loads(f.readlines)
+                PubDNS.data = json.loads(f.readlines)
 
         except:
             raise 'can not load data from local drive'
@@ -52,20 +52,22 @@ class PubDNS(object):
         try:
             filename = os.path.join(self.home, '.publicdns.csv')
             with open(filename, 'w') as f:
-                f.write(json.dumps(self.data))
+                f.write(json.dumps(PubDNS.data))
         except:
             raise 'can not save data to local drive'
 
     def get_servers(self, country_id, city=''):
-        """ return servers based on the country / city """
+        """ Return servers based on the country / city """
 
-        if country_id not in self.data:
+        if country_id not in PubDNS.data:
             return {}
 
         if city != '':
-            filtered = []
-            for rec in self.data[country_id]:
+            for rec in PubDNS.data[country_id]:
                 if rec['city'] == city:
-                    filtered.append(rec)
-            return filtered
-        return self.data[country_id]
+                    yield rec
+        return (x for x in PubDNS.data[country_id])
+
+def get_servers(*args, **kwargs):
+    """ Return a :method of class:`PubDNS` for get-servers. """
+    return PubDNS().get_servers(*args, **kwargs)
