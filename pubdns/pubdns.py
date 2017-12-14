@@ -17,8 +17,12 @@ class PubDNS(object):
         self.home = os.path.expanduser("~")
         self.disable_cache = False
 
-        csv_data = self._get_data()
-        self._normalize(csv_data)
+        try:
+            self._load_data()
+        except:
+            csv_data = self._get_data()
+            self._normalize(csv_data)
+            self._save_data()
 
     def _get_data(self):
         try:
@@ -43,7 +47,7 @@ class PubDNS(object):
         try:
             filename = os.path.join(self.home, '.publicdns.csv')
             with open(filename, 'r') as f:
-                PubDNS.data = json.loads(f.readlines)
+                PubDNS.data = json.load(f)
 
         except:
             raise 'can not load data from local drive'
@@ -68,6 +72,7 @@ class PubDNS(object):
                     yield rec
         return (x for x in PubDNS.data[country_id])
 
-def get_servers(*args, **kwargs):
-    """ Return a :method of class:`PubDNS` for get-servers. """
-    return PubDNS().get_servers(*args, **kwargs)
+def pubdns():
+    """ Return a :class:`PubDNS` """
+
+    return PubDNS()
