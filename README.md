@@ -4,13 +4,8 @@ pubdns is a library for python to have public dns servers around the world at yo
 ```
 pd = pubdns.pubdns()
 servers = pd.servers('US', 'los angeles')
-
-[{'city': 'Los Angeles', 
-  'server': '12.127.16.67', 
-  'name': 'rmtu.mt.rs.els-gms.att.net.', 
-  'reliability': '1.00'}, 
- {'city': 'Los Angeles', 
-  'server': '216.240.32.77',
-  'name': 'dns2.worldpassage.net.', 
-  'reliability':'1.00'}, ....]
+```
+```
+[{'city': 'Los Angeles', 'server': '12.127.16.67', 'name': 'rmtu.mt.rs.els-gms.att.net.', 'reliability': '1.00'}, 
+ {'city': 'Los Angeles', 'server': '216.240.32.77', 'name': 'dns2.worldpassage.net.', 'reliability':'1.00'}, ....]
 ```
