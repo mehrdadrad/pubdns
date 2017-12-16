@@ -5,7 +5,10 @@ import logging
 import os
 import json
 import collections
+import time
 import requests
+
+from .exceptions import *
 
 class PubDNS(object):
     """ PubDNS class """
@@ -24,11 +27,12 @@ class PubDNS(object):
             self.update()
 
     def _get_data(self):
-        try:
             resp = requests.get(PubDNS.host)
-            return resp.text
-        except:
-            raise 'can not fetch data from origin'
+            if resp.status_code == 200:
+                return resp.text
+            else:
+                err = "HTTP error code: {}".format(resp.status_code)
+                raise Exception(err)
 
     def _normalize(self, csv_data):
         rows = csv_data.split('\n')
@@ -36,7 +40,7 @@ class PubDNS(object):
 
         for row in rows[1:]:
             fields = row.split(',')
-            if len(fields) < 4 or fields[m['city']] == '':
+            if len(fields) < len(m) -1 or fields[m['city']] == '':
                 continue
             rec = dict(city=fields[m['city']], server=fields[m['ip']],
                        name=fields[m['name']], reliability=fields[m['reliability']])
@@ -79,8 +83,12 @@ class PubDNS(object):
                     recs.append(rec)
             return recs       
 
-    def update(self):
+    def update(self, ttl=1440):
         """ Fetch and save pub dns info """
+
+        if ttl != 0 and time.time()/60 - self._last_update() < ttl:
+            logging.debug('public dns cache is not expired')
+            return
 
         try:
             csv_data = self._get_data()
@@ -88,7 +96,16 @@ class PubDNS(object):
             self._save_data()
         except Exception as e:
             logging.debug(e)
-            raise 'Can not fetch / update public dns'
+            raise UpdateError('Can not fetch or update public dns')
+
+    def _last_update(self):
+        """ Return last update timestamp """
+
+        filename = os.path.join(self.home, '.publicdns')
+        if not os.path.isfile(filename):
+            return 0
+        return os.path.getmtime(filename)/60 
+
 
 def pubdns():
     """ Return a :class:`PubDNS` """
