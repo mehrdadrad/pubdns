@@ -8,7 +8,7 @@ import collections
 import time
 import requests
 
-from .exceptions import *
+from pubdns.exceptions import UpdateError
 
 class PubDNS(object):
     """ PubDNS class """
@@ -27,12 +27,12 @@ class PubDNS(object):
             self.update()
 
     def _get_data(self):
-            resp = requests.get(PubDNS.host)
-            if resp.status_code == 200:
-                return resp.text
-            else:
-                err = "HTTP error code: {}".format(resp.status_code)
-                raise Exception(err)
+        resp = requests.get(PubDNS.host)
+        if resp.status_code == 200:
+            return resp.text
+        else:
+            err = "HTTP error code: {}".format(resp.status_code)
+            raise Exception(err)
 
     def _normalize(self, csv_data):
         rows = csv_data.split('\n')
