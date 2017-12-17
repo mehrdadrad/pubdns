@@ -1,4 +1,4 @@
-from .pubdns import pubdns
+from .pubdns import pubdns, PubDNS
 from .dns import resolver
 from .exceptions import UpdateError
 
