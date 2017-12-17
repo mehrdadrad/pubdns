@@ -1,6 +1,7 @@
 import unittest
+import collections
 import pubdns
-from mock import patch
+from mock import patch, mock_open
 
 pd = pubdns.PubDNS.__new__(pubdns.PubDNS)
 
@@ -27,3 +28,12 @@ class TestPubDNS(unittest.TestCase):
         self.assertEqual(data['server'], '8.8.8.8')
         self.assertEqual(data['name'], 'google-public-dns-a.google.com.')
         self.assertEqual(data['reliability'], '1.00')
+
+    def test_load_data(self):
+        """ test load data from file """
+        mock_load = mock_open(read_data='{"US":[{"city": "Mountain View"}]}')
+        with patch('builtins.open', mock_load):
+            pd.home = ''
+            pd._load_data()
+            self.assertEqual(pd.data['US'], [{'city': 'Mountain View'}])
+            pd.data = collections.defaultdict(list)
