@@ -7,6 +7,7 @@ import json
 import collections
 import time
 import requests
+import random
 
 from pubdns.exceptions import UpdateError
 
@@ -56,6 +57,29 @@ class PubDNS(object):
         with open(filename, 'w') as f:
             f.write(json.dumps(PubDNS.data))
 
+    @property
+    def server(self):
+        """ Return random server """
+        country_id = random.choice(list(self.data.keys()))
+        try:
+            rand = random.choice(self.data[country_id])
+            rand = rand.copy()
+            rand.update({'country_id': country_id})
+            return rand
+        except IndexError:
+            return {}
+
+    @server.setter
+    def server(self, value):
+        """ Add a server manually to data """
+        country_id = value['country_id']
+        del value['country_id']
+        if country_id in self.data:
+            self.data[country_id].append(value)
+        else:
+            self.data[country_id] = []
+            self.data[country_id].append(value)
+
     def xservers(self, country_id, city=''):
         """ Return servers based on the country / city """
 
@@ -81,7 +105,7 @@ class PubDNS(object):
             for rec in PubDNS.data[country_id]:
                 if city == '' or rec['city'].lower() == city:
                     recs.append(rec)
-            return recs       
+            return recs
 
     def update(self, ttl=1440):
         """ Fetch and save pub dns info """
@@ -104,7 +128,7 @@ class PubDNS(object):
         filename = os.path.join(self.home, '.publicdns')
         if not os.path.isfile(filename):
             return 0
-        return os.path.getmtime(filename)/60 
+        return os.path.getmtime(filename)/60
 
 
 def pubdns():
