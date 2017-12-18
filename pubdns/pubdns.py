@@ -6,20 +6,20 @@ import os
 import json
 import collections
 import time
-import requests
 import random
+import requests
 
 from pubdns.exceptions import UpdateError
 
 class PubDNS(object):
     """ PubDNS class """
 
-    host = 'https://public-dns.info/nameservers.csv'
     data = collections.defaultdict(list)
 
     def __init__(self):
         self.home = os.path.expanduser("~")
         self.disable_cache = False
+        self.host = 'https://public-dns.info/nameservers.csv'
 
         try:
             self._load_data()
@@ -28,7 +28,7 @@ class PubDNS(object):
             self.update()
 
     def _get_data(self):
-        resp = requests.get(PubDNS.host)
+        resp = requests.get(self.host)
         if resp.status_code == 200:
             return resp.text
         else:
@@ -57,10 +57,10 @@ class PubDNS(object):
         with open(filename, 'w') as f:
             f.write(json.dumps(PubDNS.data))
 
-    @property
-    def server(self):
+    def rand_server(self, country_id=""):
         """ Return random server """
-        country_id = random.choice(list(self.data.keys()))
+        if country_id == "":
+            country_id = random.choice(list(self.data.keys()))
         try:
             rand = random.choice(self.data[country_id])
             rand = rand.copy()
@@ -69,8 +69,7 @@ class PubDNS(object):
         except IndexError:
             return {}
 
-    @server.setter
-    def server(self, value):
+    def set_server(self, value):
         """ Add a server manually to data """
         country_id = value['country_id']
         del value['country_id']
@@ -100,12 +99,12 @@ class PubDNS(object):
         city = city.lower()
         if city == '':
             return PubDNS.data[country_id]
-        else:
-            recs = []
-            for rec in PubDNS.data[country_id]:
-                if city == '' or rec['city'].lower() == city:
-                    recs.append(rec)
-            return recs
+    
+        recs = []
+        for rec in PubDNS.data[country_id]:
+            if city == '' or rec['city'].lower() == city:
+                recs.append(rec)
+        return recs
 
     def update(self, ttl=1440):
         """ Fetch and save pub dns info """
