@@ -9,7 +9,7 @@ import time
 import random
 import requests
 
-from pubdns.exceptions import UpdateError
+from .exceptions import UpdateError
 
 class PubDNS(object):
     """ PubDNS class """
@@ -82,11 +82,12 @@ class PubDNS(object):
     def xservers(self, country_id, city=''):
         """ Return servers based on the country / city """
 
+        records = []
         if country_id not in PubDNS.data:
-            return {}
+            records = PubDNS.data[country_id]
 
         city = city.lower()
-        for rec in PubDNS.data[country_id]:
+        for rec in records:
             if city == '' or rec['city'].lower() == city:
                 yield rec
 
@@ -99,7 +100,7 @@ class PubDNS(object):
         city = city.lower()
         if city == '':
             return PubDNS.data[country_id]
-    
+
         recs = []
         for rec in PubDNS.data[country_id]:
             if city == '' or rec['city'].lower() == city:
