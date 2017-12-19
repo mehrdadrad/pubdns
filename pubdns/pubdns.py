@@ -18,7 +18,6 @@ class PubDNS(object):
 
     def __init__(self):
         self.home = os.path.expanduser("~")
-        self.disable_cache = False
         self.host = 'https://public-dns.info/nameservers.csv'
 
         try:
@@ -58,7 +57,13 @@ class PubDNS(object):
             f.write(json.dumps(PubDNS.data))
 
     def rand_server(self, country_id=""):
-        """ Return random server """
+        """ Return a random server
+
+        :param country_id: two-letter ISO 3166-1 of the country, optional
+
+        :rtype: dict
+        """
+
         if country_id == "":
             country_id = random.choice(list(self.data.keys()))
         try:
@@ -69,47 +74,74 @@ class PubDNS(object):
         except IndexError:
             return {}
 
-    def set_server(self, value):
-        """ Add a server manually to data """
-        country_id = value['country_id']
-        del value['country_id']
+    def set_server(self, server):
+        """ Add a custom server in memory
+
+        :param server: a server dict including below keys:
+            - country_id: two letter ISO 3166-1
+            - city: city name
+            - name: dns name
+            - server: ip address
+            - reliability: reliability number
+        """
+
+        country_id = server['country_id']
+        del server['country_id']
         if country_id in self.data:
-            self.data[country_id].append(value)
+            self.data[country_id].append(server)
         else:
             self.data[country_id] = []
-            self.data[country_id].append(value)
+            self.data[country_id].append(server)
 
     def xservers(self, country_id, city=''):
-        """ Return servers based on the country / city """
+        """ Return a generator of servers based on the country / city
 
-        records = PubDNS.data.get(country_id, [])
+        :param country_id: two-letter ISO 3166-1 alpha-2 code of the country
+        :param city: the city that the server is hosted on, optional
+
+        :rtype: Generator[dict]
+        """
+
+        country_id = country_id.upper()
+        rows = PubDNS.data.get(country_id, [])
 
         city = city.lower()
-        for rec in records:
-            if city == '' or rec['city'].lower() == city:
-                yield rec
+        for row in rows:
+            if city == '' or row['city'].lower() == city:
+                yield row
 
     def servers(self, country_id, city=''):
-        """ Return servers based on the country / city """
+        """ Return servers based on the country / city
 
-        if country_id not in PubDNS.data:
-            return {}
+        :param country_id: two-letter ISO 3166-1 alpha-2 code of the country
+        :param city: the city that the server is hosted on
+
+        :rtype: list
+        """
+
+        country_id = country_id.upper()
+        rows = PubDNS.data.get(country_id, [])
 
         city = city.lower()
         if city == '':
-            return PubDNS.data[country_id]
+            return rows
 
-        recs = []
-        for rec in PubDNS.data[country_id]:
-            if city == '' or rec['city'].lower() == city:
-                recs.append(rec)
-        return recs
+        res = []
+        for row in rows:
+            if city == '' or row['city'].lower() == city:
+                res.append(row)
+        return res
 
     def update(self, ttl=1440):
-        """ Fetch and save pub dns info """
+        """ Fetch and store public-dns.info dns servers information
+
+        :param ttl: update checks cache last modified time and updates
+            if it expired based on the specified TTL. defaults to ``1440``
+            the unit is minute.
+        """
 
         if ttl != 0 and time.time()/60 - self._last_update() < ttl:
-            logging.debug('public dns cache is not expired')
+            logging.debug('Public dns cache is not expired')
             return
 
         try:
