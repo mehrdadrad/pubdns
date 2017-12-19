@@ -82,9 +82,7 @@ class PubDNS(object):
     def xservers(self, country_id, city=''):
         """ Return servers based on the country / city """
 
-        records = []
-        if country_id not in PubDNS.data:
-            records = PubDNS.data[country_id]
+        records = PubDNS.data.get(country_id, [])
 
         city = city.lower()
         for rec in records:
