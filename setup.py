@@ -21,16 +21,23 @@ Data sample:
 }
 
 """
+import os
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
+
+about = {}
+here = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(here, 'pubdns', '__version__.py'), 'r') as f:
+    exec(f.read(), about)
+
 setup(name='pubdns',
-      version='0.1.2',
-      description='Python library to interact with public DNS servers',
-      license='MIT',
+      version=about['__version__'],
+      description=about['__description__'],
+      license=about['__license__'],
       packages=['pubdns'],
       classifiers=(
           'Development Status :: 3 - Alpha',
@@ -45,8 +52,8 @@ setup(name='pubdns',
           'Programming Language :: Python :: 3.5',
           'Programming Language :: Python :: 3.6',
       ),
-      author='Mehrdad Arshad Rad',
-      author_email='arshad.rad@gmail.com',
-      url='https://github.com/mehrdadrad/pubdns',
+      author=about['__author__'],
+      author_email=about['__author_email__'],
+      url=about['__url__'],
       install_requires=['dnspython', 'requests'],
      )
