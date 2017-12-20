@@ -1,9 +1,9 @@
-## PubDNS (intract with 28K public DNS servers around the world)
+## PubDNS (interact with 28K public DNS servers around the world)
 pubdns is a library for python to have more than 28K public dns servers from 190+ countries at your python script. it works based on the public-dns.info collected data and there is a wrapper based on the dnspython to resolve all type of dns records through these public dns server smoothly.
 
 ### Quick start
 
-```
+```python
 import pubdns
 pd = pubdns.pubdns()
 servers = pd.servers('US', 'los angeles')
@@ -31,7 +31,7 @@ servers = pd.servers('US', 'los angeles')
 
 ### Sample DNS Query
 
-```
+```python
 rs = pubdns.dns.resolver(servers, 'amazon.com', ['A'])
 for r in rs:
     print(r)
