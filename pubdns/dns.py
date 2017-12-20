@@ -17,10 +17,12 @@ def resolver(servers, name, addr_types=['A'], timeout=1):
 def _resolver(server, name, addr_type, timeout=1):
     res = []
     qname = dns.name.from_text(name)
+    addr_type = addr_type.upper()
     q = dns.message.make_query(qname, addr_type)
     r = dns.query.udp(q, server['server'], timeout=timeout)
     for rrset in r.answer:
         for rr in rrset.to_rdataset():
-            res.append(dict(name=str(rr), type=rr.rdtype))
+            res.append(dict(name=str(rr), type=addr_type))
 
     return res
+
