@@ -5,6 +5,7 @@ from mock import patch, mock_open
 
 pd = pubdns.PubDNS.__new__(pubdns.PubDNS)
 
+
 class TestPubDNS(unittest.TestCase):
     """ test pubdns class methods """
     def test_get_data(self):

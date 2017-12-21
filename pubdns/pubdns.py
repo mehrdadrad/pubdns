@@ -11,6 +11,7 @@ import requests
 
 from .exceptions import UpdateError
 
+
 class PubDNS(object):
     """ PubDNS class """
 
@@ -36,14 +37,15 @@ class PubDNS(object):
 
     def _normalize(self, csv_data):
         rows = csv_data.split('\n')
-        m = {x:y for y, x in enumerate(rows[0].split(','))}
+        m = {x: y for y, x in enumerate(rows[0].split(','))}
 
         for row in rows[1:]:
             fields = row.split(',')
-            if len(fields) < len(m) -1 or fields[m['city']] == '':
+            if len(fields) < len(m) - 1 or fields[m['city']] == '':
                 continue
             rec = dict(city=fields[m['city']], server=fields[m['ip']],
-                       name=fields[m['name']], reliability=fields[m['reliability']])
+                       name=fields[m['name']],
+                       reliability=fields[m['reliability']])
             self.data[fields[m['country_id']]].append(rec)
 
     def _load_data(self):
@@ -140,7 +142,7 @@ class PubDNS(object):
             the unit is minute.
         """
 
-        if ttl != 0 and time.time()/60 - self._last_update() < ttl:
+        if ttl != 0 and time.time() / 60 - self._last_update() < ttl:
             logging.debug('Public dns cache is not expired')
             return
 
@@ -158,7 +160,7 @@ class PubDNS(object):
         filename = os.path.join(self.home, '.publicdns')
         if not os.path.isfile(filename):
             return 0
-        return os.path.getmtime(filename)/60
+        return os.path.getmtime(filename) / 60
 
 
 def pubdns():

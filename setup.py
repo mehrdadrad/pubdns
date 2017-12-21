@@ -34,10 +34,17 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'pubdns', '__version__.py'), 'r') as f:
     exec(f.read(), about)
 
+with open('README.md', 'r') as f:
+    descr = f.read()
+
 setup(name='pubdns',
       version=about['__version__'],
       description=about['__description__'],
+      long_description=descr,
       license=about['__license__'],
+      author=about['__author__'],
+      author_email=about['__author_email__'],
+      url=about['__url__'],
       packages=['pubdns'],
       classifiers=(
           'Development Status :: 3 - Alpha',
@@ -52,8 +59,5 @@ setup(name='pubdns',
           'Programming Language :: Python :: 3.5',
           'Programming Language :: Python :: 3.6',
       ),
-      author=about['__author__'],
-      author_email=about['__author_email__'],
-      url=about['__url__'],
       install_requires=['dnspython', 'requests'],
      )
