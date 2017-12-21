@@ -1,0 +1,27 @@
+pubdns package
+==============
+
+pubdns module
+---------------------
+
+.. automodule:: pubdns.pubdns
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+dns module
+------------------
+
+.. automodule:: pubdns.dns
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+exceptions module
+-------------------------
+
+.. automodule:: pubdns.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

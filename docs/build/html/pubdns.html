@@ -1,0 +1,246 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pubdns package &#8212; PubDNS  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="PubDNS’s documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="PubDNS’s documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PubDNS  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pubdns-package">
+<h1>pubdns package<a class="headerlink" href="#pubdns-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pubdns.pubdns">
+<span id="pubdns-module"></span><h2>pubdns module<a class="headerlink" href="#module-pubdns.pubdns" title="Permalink to this headline">¶</a></h2>
+<p>public dns python module</p>
+<dl class="class">
+<dt id="pubdns.pubdns.PubDNS">
+<em class="property">class </em><code class="descclassname">pubdns.pubdns.</code><code class="descname">PubDNS</code><a class="headerlink" href="#pubdns.pubdns.PubDNS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>PubDNS class</p>
+<dl class="attribute">
+<dt id="pubdns.pubdns.PubDNS.data">
+<code class="descname">data</code><em class="property"> = defaultdict(&lt;class 'list'&gt;, {})</em><a class="headerlink" href="#pubdns.pubdns.PubDNS.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pubdns.pubdns.PubDNS.rand_server">
+<code class="descname">rand_server</code><span class="sig-paren">(</span><em>country_id=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pubdns.pubdns.PubDNS.rand_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a random server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>country_id</strong> – two-letter ISO 3166-1 of the country, optional</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pubdns.pubdns.PubDNS.servers">
+<code class="descname">servers</code><span class="sig-paren">(</span><em>country_id</em>, <em>city=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pubdns.pubdns.PubDNS.servers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return servers based on the country / city</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>country_id</strong> – two-letter ISO 3166-1 alpha-2 code of the country</li>
+<li><strong>city</strong> – the city that the server is hosted on</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pubdns.pubdns.PubDNS.set_server">
+<code class="descname">set_server</code><span class="sig-paren">(</span><em>server</em><span class="sig-paren">)</span><a class="headerlink" href="#pubdns.pubdns.PubDNS.set_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a custom server in memory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>server</strong> – a server dict including below keys:
+- country_id: two letter ISO 3166-1
+- city: city name
+- name: dns name
+- server: ip address
+- reliability: reliability number</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pubdns.pubdns.PubDNS.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>ttl=1440</em><span class="sig-paren">)</span><a class="headerlink" href="#pubdns.pubdns.PubDNS.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch and store public-dns.info dns servers information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ttl</strong> – update checks cache last modified time and updates
+if it expired based on the specified TTL. defaults to <code class="docutils literal"><span class="pre">1440</span></code>
+the unit is minute.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pubdns.pubdns.PubDNS.xservers">
+<code class="descname">xservers</code><span class="sig-paren">(</span><em>country_id</em>, <em>city=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pubdns.pubdns.PubDNS.xservers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a generator of servers based on the country / city</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>country_id</strong> – two-letter ISO 3166-1 alpha-2 code of the country</li>
+<li><strong>city</strong> – the city that the server is hosted on, optional</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Generator[dict]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pubdns.pubdns.pubdns">
+<code class="descclassname">pubdns.pubdns.</code><code class="descname">pubdns</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pubdns.pubdns.pubdns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#pubdns.pubdns.PubDNS" title="pubdns.pubdns.PubDNS"><code class="xref py py-class docutils literal"><span class="pre">PubDNS</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pubdns.dns">
+<span id="dns-module"></span><h2>dns module<a class="headerlink" href="#module-pubdns.dns" title="Permalink to this headline">¶</a></h2>
+<p>dns module is a dnspython wrapper to query pubic dns servers</p>
+<dl class="function">
+<dt id="pubdns.dns.resolver">
+<code class="descclassname">pubdns.dns.</code><code class="descname">resolver</code><span class="sig-paren">(</span><em>servers, name, addr_types=['A'], timeout=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pubdns.dns.resolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>resolves the name through DNS servers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>servers</strong> – list of dns servers</li>
+<li><strong>name</strong> – domain name</li>
+<li><strong>add_types</strong> – dns query type list</li>
+<li><strong>timeout</strong> – dns query timeout in second</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pubdns.exceptions">
+<span id="exceptions-module"></span><h2>exceptions module<a class="headerlink" href="#module-pubdns.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="pubdns.exceptions.UpdateError">
+<em class="property">exception </em><code class="descclassname">pubdns.exceptions.</code><code class="descname">UpdateError</code><a class="headerlink" href="#pubdns.exceptions.UpdateError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+<p>An update error occurred</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">PubDNS’s documentation</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="PubDNS’s documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PubDNS  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    </div>
+  </body>
+</html>
