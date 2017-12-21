@@ -1,5 +1,6 @@
 import unittest
 import collections
+import sys
 import pubdns
 from mock import patch, mock_open
 
@@ -33,7 +34,10 @@ class TestPubDNS(unittest.TestCase):
     def test_load_data(self):
         """ test load data from file """
         mock_load = mock_open(read_data='{"US":[{"city": "Mountain View"}]}')
-        with patch('builtins.open', mock_load):
+        builtin_open = 'builtins.open'
+        if sys.version_info[0] < 3:
+            builtin_open = '__builtin__.open'
+        with patch(builtin_open, mock_load):
             pd.home = ''
             pd._load_data()
             self.assertEqual(pd.data['US'], [{'city': 'Mountain View'}])

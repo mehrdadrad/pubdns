@@ -1,12 +1,15 @@
 .PHONY: docs
 
 DEPS = \
-		flake8 \
-		mock \
-		setuptools \
-		sphinx \
-		twine \
+	flake8 \
+	mock \
+	setuptools \
+	sphinx \
+	twine \
+	detox \
 
+test:
+	detox
 
 setup-dev-env:
 	pip install --upgrade $(DEPS)

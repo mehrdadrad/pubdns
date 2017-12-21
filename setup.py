@@ -46,6 +46,8 @@ setup(name='pubdns',
       author_email=about['__author_email__'],
       url=about['__url__'],
       packages=['pubdns'],
+      tests_require=['mock'],
+      test_suite="tests",
       classifiers=(
           'Development Status :: 3 - Alpha',
           'Intended Audience :: Developers',
