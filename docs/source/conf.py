@@ -17,6 +17,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+from datetime import date
 import os
 import sys
 
@@ -51,6 +52,8 @@ master_doc = 'index'
 # General information about the project.
 project = 'PubDNS'
 author = pubdns.__author__
+copyright = u'{year}, {author}'.format(year=date.today().year,
+                                       author=pubdns.__author__)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
