@@ -38,7 +38,7 @@ class TestPubDNS(unittest.TestCase):
         if sys.version_info[0] < 3:
             builtin_open = '__builtin__.open'
         with patch(builtin_open, mock_load):
-            pd.home = ''
+            pd.cache_dir = ''
             pd._load_data()
             self.assertEqual(pd.data['US'], [{'city': 'Mountain View'}])
             pd.data = collections.defaultdict(list)
