@@ -1,4 +1,8 @@
 ## PubDNS (interact with 28K public DNS servers around the world)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/)
+[![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/)
+[![Documentation Status](https://readthedocs.org/projects/pubdns/badge/?version=latest)](http://pubdns.readthedocs.io/en/latest/?badge=latest)
+
 pubdns is a library for python to have more than 28K public dns servers from 190+ countries at your python script. it works based on the public-dns.info collected data and there is a wrapper based on the dnspython to resolve all type of dns records through these public dns server smoothly.
 
 ### Quick start
@@ -60,12 +64,12 @@ for r in rs:
 
 - Search by country and city
 - Cache public-dns.info data and update with specific TTL
-- Support HTTP proxy to get external data
+- Support HTTP proxy to get public dns data
 - Query the public DNS with specific record type(s)
 
 ## Requirements
 
-Python 2.6 or later.
+Python 2.7 or later.
 
 ## Installation
 
