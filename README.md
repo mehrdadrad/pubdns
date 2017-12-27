@@ -1,4 +1,5 @@
 ## PubDNS (interact with 28K public DNS servers around the world)
+[![Build Status](https://travis-ci.org/mehrdadrad/pubdns.svg?branch=master)](https://travis-ci.org/mehrdadrad/pubdns)
 [![PyPI pyversions](https://img.shields.io/badge/python-2.6,%202.7,%203.4,%203.5,%203.6-blue.svg)](https://pypi.python.org/pypi/pubdns/)
 [![PyPI license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mehrdadrad/pubdns/blob/master/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/pubdns/badge/?version=latest)](http://pubdns.readthedocs.io/en/latest/?badge=latest)
