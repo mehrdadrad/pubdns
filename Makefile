@@ -11,7 +11,6 @@ DEPS = \
 	detox \
 
 test:
-	pip install detox
 	detox
 
 setup-dev-env:
