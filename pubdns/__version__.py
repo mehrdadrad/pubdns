@@ -1,7 +1,7 @@
 __title__ = 'pubdns'
 __description__ = 'Python library to interact with public DNS servers'
 __url__ = 'https://github.com/mehrdadrad/pubdns'
-__version__ = '0.1.2'
+__version__ = '0.1.4'
 __author__ = 'Mehrdad Arshad Rad'
 __author_email__ = 'arshad.rad@gmail.com'
 __license__ = 'MIT'

@@ -49,7 +49,7 @@ setup(name='pubdns',
       tests_require=['mock'],
       test_suite="tests",
       classifiers=(
-          'Development Status :: 3 - Alpha',
+          'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
           'Natural Language :: English',
           'License :: OSI Approved :: MIT License',
