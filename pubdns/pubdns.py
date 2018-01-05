@@ -36,7 +36,7 @@ class PubDNS(object):
     def __init__(self, cache_dir=None, host=None, proxies=None,
                  timeout=1, cache_disabled=False):
 
-        public_dns = 'https://public-dns.info/nameservers.csv'
+        public_dns = 'http://public-dns.info/nameservers.csv'
         home_dir = os.path.expanduser("~")
 
         self.cache_dir = home_dir if cache_dir is None else cache_dir
