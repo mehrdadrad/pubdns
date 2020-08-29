@@ -36,7 +36,7 @@ class PubDNS(object):
     data = collections.defaultdict(list)
 
     def __init__(self, cache_dir=None, host=DEFAULT_CSV_URL, proxies=None,
-                 timeout=1, cache_disabled=False):
+                 timeout=5, cache_disabled=False):
 
         home_dir = os.path.expanduser("~")
 
