@@ -42,3 +42,16 @@ class TestPubDNS(unittest.TestCase):
             pd._load_data()
             self.assertEqual(pd.data['US'], [{'city': 'Mountain View'}])
             pd.data = collections.defaultdict(list)
+
+    def test_live(self):
+        dns_google = {
+            'city': 'Lake Saint Louis',
+            'server': '8.8.8.8',
+            'name': 'dns.google.',
+            'reliability': '1.00'
+        }
+
+        pd = pubdns.PubDNS(cache_disabled=True)
+        data = pd.servers('US')
+        assert data
+        assert dns_google in data, data
