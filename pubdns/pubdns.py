@@ -63,6 +63,12 @@ class PubDNS(object):
     def _normalize(self, csv_data):
         rows = csv_data.split('\n')
         m = {x: y for y, x in enumerate(rows[0].split(','))}
+        if 'ip' not in m:
+            m['ip'] = m['ip_address']
+            del m['ip_address']
+        if 'country_id' not in m:
+            m['country_id'] = m['country_code']
+            del m['country_code']
 
         for row in rows[1:]:
             fields = row.split(',')
