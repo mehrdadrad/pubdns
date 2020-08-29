@@ -11,6 +11,8 @@ import requests
 
 from .exceptions import UpdateError
 
+DEFAULT_CSV_URL = 'https://public-dns.info/nameservers.csv'
+
 
 class PubDNS(object):
     """PubDNS class
@@ -33,14 +35,13 @@ class PubDNS(object):
 
     data = collections.defaultdict(list)
 
-    def __init__(self, cache_dir=None, host=None, proxies=None,
+    def __init__(self, cache_dir=None, host=DEFAULT_CSV_URL, proxies=None,
                  timeout=1, cache_disabled=False):
 
-        public_dns = 'http://public-dns.info/nameservers.csv'
         home_dir = os.path.expanduser("~")
 
         self.cache_dir = home_dir if cache_dir is None else cache_dir
-        self.host = public_dns if host is None else host
+        self.host = host
         self.proxies = {} if proxies is None else proxies
         self.cache_disabled = cache_disabled
         self.timeout = timeout
