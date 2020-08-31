@@ -8,10 +8,10 @@ DEPS = \
 	setuptools \
 	sphinx \
 	twine \
-	detox \
+	tox \
 
 test:
-	detox
+	tox
 
 setup-dev-env:
 	pip install --upgrade $(DEPS)
