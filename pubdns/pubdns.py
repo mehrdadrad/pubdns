@@ -11,6 +11,8 @@ import requests
 
 from .exceptions import UpdateError
 
+DEFAULT_CSV_URL = 'https://public-dns.info/nameservers.csv'
+
 
 class PubDNS(object):
     """PubDNS class
@@ -33,14 +35,13 @@ class PubDNS(object):
 
     data = collections.defaultdict(list)
 
-    def __init__(self, cache_dir=None, host=None, proxies=None,
-                 timeout=1, cache_disabled=False):
+    def __init__(self, cache_dir=None, host=DEFAULT_CSV_URL, proxies=None,
+                 timeout=5, cache_disabled=False):
 
-        public_dns = 'http://public-dns.info/nameservers.csv'
         home_dir = os.path.expanduser("~")
 
         self.cache_dir = home_dir if cache_dir is None else cache_dir
-        self.host = public_dns if host is None else host
+        self.host = host
         self.proxies = {} if proxies is None else proxies
         self.cache_disabled = cache_disabled
         self.timeout = timeout
@@ -63,6 +64,12 @@ class PubDNS(object):
     def _normalize(self, csv_data):
         rows = csv_data.split('\n')
         m = {x: y for y, x in enumerate(rows[0].split(','))}
+        if 'ip' not in m:
+            m['ip'] = m['ip_address']
+            del m['ip_address']
+        if 'country_id' not in m:
+            m['country_id'] = m['country_code']
+            del m['country_code']
 
         for row in rows[1:]:
             fields = row.split(',')
